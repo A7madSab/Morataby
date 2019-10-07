@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, TextInput, Button } from "react-native"
 import { connect } from "react-redux"
 import { addClinic } from "../action"
+import { saveClinic } from '../../utils/api'
 
 class AddClinicScreen extends Component {
     state = {
@@ -12,6 +13,7 @@ class AddClinicScreen extends Component {
     }
     addClinic = () => {
         const { dispatch, navigation } = this.props
+        saveClinic(this.state)
         dispatch(addClinic(this.state))
         navigation.pop()
     }

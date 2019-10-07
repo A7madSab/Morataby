@@ -22,16 +22,13 @@ export const handelAddClinics = (clinics) => {
     saveClinics(clinics)
     return addClinics(clinics)
 }
-export const addPatiant = (clinicId, patiant) => {
-    AsyncStorage.setItem()
-    return ({
-        type: ADD_PATIANT,
-        patiant: {
-            clinicId,
-            ...patiant
-        }
-    })
-}
+export const addPatiant = (clinicId, patiant) => ({
+    type: ADD_PATIANT,
+    patiant: {
+        clinicId,
+        ...patiant
+    }
+})
 export const removePatiant = (clinicId, patiantId) => ({
     type: REMOVE_PATIANT,
     clinicId,

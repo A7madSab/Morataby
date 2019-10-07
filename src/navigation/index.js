@@ -7,6 +7,7 @@ import IncomeScreen from "../screen/IncomeScreen.js"
 import AddClinicScreen from "../screen/AddClinicScreen"
 import ClinicListScreen from "../screen/ClinicListScreen.js"
 import ClinicScreen from "../screen/ClinicScreen.js"
+import PatientScreen from "../screen/PatientScreen.js"
 
 import { cottonCandy, oysterPink } from "../../utils/colors"
 
@@ -45,12 +46,28 @@ const ClinicStackNavigation = createStackNavigator({
     }
 })
 
-const StackStackNavigation = createStackNavigator({
+const IncomeStackNavigation = createStackNavigator({
     Income: {
         screen: IncomeScreen,
         navigationOptions: ({ navigation }) => {
             return ({
                 title: "Income",
+                headerLeft: <Feather
+                    onPress={() => navigation.toggleDrawer()}
+                    name="menu"
+                    size={30}
+                    style={{ margin: 15 }}
+                />
+            })
+        }
+    }
+})
+const PatientStackNavigation = createStackNavigator({
+    Patients: {
+        screen: PatientScreen,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                title: "Patients",
                 headerLeft: <Feather
                     onPress={() => navigation.toggleDrawer()}
                     name="menu"
@@ -70,9 +87,15 @@ const AppStack = createDrawerNavigator({
         }
     },
     Income: {
-        screen: StackStackNavigation,
+        screen: IncomeStackNavigation,
         navigationOptions: {
             drawerIcon: () => <Feather name="dollar-sign" size={30} />
+        }
+    },
+    Patient: {
+        screen: PatientStackNavigation,
+        navigationOptions: {
+            drawerIcon: () => <Feather name="users" size={30} />
         }
     }
 }, {

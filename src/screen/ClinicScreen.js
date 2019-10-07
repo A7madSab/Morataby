@@ -56,7 +56,7 @@ class ClinicScreen extends Component {
                         patients.map(patient => {
                             return (
                                 patient.clinicId === clinicId &&
-                                <Card>
+                                <Card key={patient.id}>
                                     <Text>
                                         {patient.name} ||
                                         {patient.case} ||
