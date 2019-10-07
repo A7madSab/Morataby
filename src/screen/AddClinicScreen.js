@@ -1,22 +1,30 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, TouchableOpacity } from "react-native"
+import { Text, View, TextInput, Button } from "react-native"
+import { connect } from "react-redux"
+import { addClinic } from "../action"
 
-export default class AddClinicScreen extends Component {
+class AddClinicScreen extends Component {
     state = {
+        id: '',
         name: '',
         place: '',
         percentage: '',
     }
     addClinic = () => {
-        const { navigation } = this.props
-        navigation.state.params.addClinic(this.state)
+        const { dispatch, navigation } = this.props
+        dispatch(addClinic(this.state))
         navigation.pop()
     }
     render() {
-        let { name, place, percentage } = this.state
+        let { id, name, place, percentage } = this.state
         return (
             <View>
                 <Text> AddClinicScreen </Text>
+                <TextInput
+                    placeholder="id"
+                    value={id}
+                    onChangeText={id => this.setState(({ id }))}
+                />
                 <TextInput
                     placeholder="Clinic Name"
                     value={name}
@@ -32,12 +40,12 @@ export default class AddClinicScreen extends Component {
                     value={percentage}
                     onChangeText={(percentage) => this.setState(({ percentage }))}
                 />
-                <TouchableOpacity onPress={this.addClinic}>
-                    <Text> Add Clinic </Text>
-                </TouchableOpacity>
+                <Button title="Add Clinic" onPress={this.addClinic} />
 
                 <Text>{JSON.stringify(this.state)}</Text>
             </View>
         )
     }
 }
+
+export default connect()(AddClinicScreen)

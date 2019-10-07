@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, Button } from "react-native"
 import { Card } from "react-native-elements"
-
-export default class ClinicScreen extends Component {
+import { connect } from "react-redux"
+import { addPatiant } from "../action"
+class ClinicScreen extends Component {
     state = {
         name: "",
         age: "",
@@ -11,17 +12,17 @@ export default class ClinicScreen extends Component {
         id: ""
     }
     addPatient = () => {
-        const { navigation } = this.props
-        const { id } = navigation.state.params.clinic
-
-        navigation.state.params.addPatient(id, this.state)
+        const { dispatch, navigation } = this.props
+        const clinicId = navigation.state.params.clinic.id
+        dispatch(addPatiant(clinicId, this.state))
     }
     render() {
-        const { navigation } = this.props
         const { name, age, cost, operation, id } = this.state
+        const { dispatch, navigation, patients } = this.props
+        const clinicId = navigation.state.params.clinic.id
+
         return (
             <View>
-
                 <View>
                     <TextInput
                         placeholder="Patient id"
@@ -50,20 +51,29 @@ export default class ClinicScreen extends Component {
                     />
                 </View>
                 <Button title="add patient" onPress={this.addPatient} />
+                <View>
+                    {
+                        patients.map(patient => {
+                            return (
+                                patient.clinicId === clinicId &&
+                                <Card>
+                                    <Text>
+                                        {patient.name} ||
+                                        {patient.case} ||
+                                        {patient.cost}
+                                    </Text>
+                                </Card>
+                            )
+                        })
+                    }
+                </View>
             </View>
         )
     }
 }
 
-// <Button title="add patient" onPress={() => navigation.navigate("AddPatient")} />
-// <View>
-//     {navigation.state.params.patients.map(patient => {
-//         return (
-//             <Card key={patient.name}>
-//                 <Text>Patient Name:{patient.name}</Text>
-//                 <Text>Patient age:{patient.age}</Text>
-//                 <Text>Patient case:{patient.case}</Text>
-//             </Card>
-//         )
-//     })}
-// </View>
+const mapStateToProps = (state) => ({
+    patients: state.patients
+})
+
+export default connect(mapStateToProps)(ClinicScreen)
