@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import { Provider } from "react-redux"
 import store from "./src/store"
 
@@ -9,5 +9,5 @@ export default function App() {
     <Provider store={store}>
       <Navigation />
     </Provider>
-  );
+  )
 }

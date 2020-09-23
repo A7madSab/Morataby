@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native"
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, AsyncStorage } from "react-native"
 import { Card, Button } from "react-native-elements"
 import { addClinic, addClinics, handelAddClinics, addPatiant } from "../action"
 import { fetchClinics } from "../../utils/api"
@@ -10,51 +10,63 @@ import Block from '../components/Block'
 import { pinkFraud, copperRust, darkPurple } from '../../utils/colors'
 class ClinicListScreen extends Component {
     componentDidMount() {
-        const clinics = [
-            {
-                id: 1,
-                name: "Dar El Asnan",
-                percentage: 25
-            },
-            {
-                id: 2,
-                name: "De Rehab",
-                percentage: 35
-            },
-            {
-                id: 3,
-                name: "Dental Land",
-                percentage: 15
-            },
-            {
-                id: 4,
-                name: "Wedoo",
-                percentage: 50
-            }
-        ]
-        this.props.dispatch(addClinics(clinics))
-        this.props.dispatch(addPatiant(1, {
-            name: "Ahmad Sabry",
-            age: 21,
-            cost: 500,
-            case: "Quis dolore labore eiusmod veniam consequat.",
-            id: 1865
-        }))
-        this.props.dispatch(addPatiant(1, {
-            name: "Haneen Sabry",
-            age: 26,
-            cost: 1500,
-            case: "Esse eu ullamco in eiusmod laborum commodo occaecat in nulla.",
-            id: 185
-        }))
-        this.props.dispatch(addPatiant(2, {
-            name: "Aly Sabry",
-            age: 21,
-            cost: 900,
-            case: "Eu magna sunt fugiat ullamco ad Lorem nostrud.",
-            id: 1857
-        }))
-        this.props.navigation.navigate("Income")
+        // const clinics = [
+        //     {
+        //         id: 1,
+        //         name: "Dar El Asnan",
+        //         percentage: 25
+        //     },
+        //     {
+        //         id: 2,
+        //         name: "De Rehab",
+        //         percentage: 35
+        //     },
+        //     {
+        //         id: 3,
+        //         name: "Dental Land",
+        //         percentage: 15
+        //     },
+        //     {
+        //         id: 4,
+        //         name: "Wedoo",
+        //         percentage: 50
+        //     }
+        // ]
+        let clinics = []
+        AsyncStorage.getItem('Clinics', (err, result) => {
+            if (err) console.error(err)
+            return result
+        })
+            .then(JSON.parse)
+            .then(res => {
+                console.log("res", res)
+                this.props.dispatch(addClinics(res))
+            })
+        // console.log("After async storage clinics:", clinics)
+        // this.props.dispatch(addPatiant(1, {
+        //     name: "Ahmad Sabry",
+        //     age: 21,
+        //     cost: 500,
+        //     case: "Quis dolore labore eiusmod veniam consequat.",
+        //     id: 1865
+        // }))
+        // this.props.dispatch(addPatiant(1, {
+        //     name: "Haneen Sabry",
+        //     age: 26,
+        //     cost: 1500,
+        //     case: "Esse eu ullamco in eiusmod laborum commodo occaecat in nulla.",
+        //     id: 185
+        // }))
+        // this.props.dispatch(addPatiant(2, {
+        //     name: "Aly Sabry",
+        //     age: 21,
+        //     cost: 900,
+        //     case: "Eu magna sunt fugiat ullamco ad Lorem nostrud.",
+        //     id: 1857
+        // }))
+        // this.props.navigation.navigate("Income")
+
+        this.forceUpdate()
     }
     removeClinic = (id) => {
         this.props.dispatch(removeClinic(id))

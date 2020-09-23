@@ -22,7 +22,7 @@ class ClinicScreen extends Component {
         const clinicId = navigation.state.params.clinic.id
 
         return (
-            <View>
+            <View style={{ padding: 25 }}>
                 <View>
                     <TextInput
                         placeholder="Patient id"

@@ -13,15 +13,20 @@ class AddClinicScreen extends Component {
     }
     addClinic = () => {
         const { dispatch, navigation } = this.props
-        saveClinic(this.state)
-        dispatch(addClinic(this.state))
+        const { id, name, place, percentage } = this.state
+        dispatch(addClinic({
+            id,
+            name,
+            place,
+            percentage
+        }))
         navigation.pop()
     }
     render() {
         let { id, name, place, percentage } = this.state
         return (
-            <View>
-                <Text> AddClinicScreen </Text>
+            <View style={{ padding: 25 }}>
+                <Text> Add Clinic </Text>
                 <TextInput
                     placeholder="id"
                     value={id}
@@ -43,8 +48,6 @@ class AddClinicScreen extends Component {
                     onChangeText={(percentage) => this.setState(({ percentage }))}
                 />
                 <Button title="Add Clinic" onPress={this.addClinic} />
-
-                <Text>{JSON.stringify(this.state)}</Text>
             </View>
         )
     }
