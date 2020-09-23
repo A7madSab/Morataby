@@ -33,8 +33,8 @@ class IncomeScreen extends Component {
                                     </View>
                                     <View>
                                         {income.patients.map(patient => {
-                                            totalClinicalIncome = totalClinicalIncome + patient.cost
-                                            totalIncome = totalIncome + (totalClinicalIncome * (income.clinicPercentage / 100))
+                                            totalClinicalIncome = Number(totalClinicalIncome) + Number(patient.cost)
+                                            totalIncome = Number(totalIncome) + (Number(totalClinicalIncome) * (Number(income.clinicPercentage) / 100))
                                             return (
                                                 <View key={patient.id} style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
                                                     <Text>{patient.name}</Text>
